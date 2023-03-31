@@ -1,8 +1,33 @@
+const home = gameObject().home
+const away = gameObject().away
+const players = {...home.players, ...away.players}
+
+console.log("")
+numPointsScored("Brendan Haywood")
+console.log("")
+shoeSize("Reggie Evans")
+console.log("")
+teamColors("Brooklyn Nets")
+console.log("")
+teamNames()
+console.log("")
+playerNumbers("Charlotte Hornets")
+console.log("")
+playerStats("DeSagna Diop")
+console.log("")
+bigShoeRebounds()
+console.log("")
+mostPointsScored()
+console.log("")
+winningTeam()
+console.log("")
+doesLongNameStealATon()
+
 function gameObject(){
     const game = {
         home: {
             teamName: "Brooklyn Nets",
-            colors: ["Black" , "White"],
+            colors: ["black" , "white"],
             players: {
                 "Alan Anderson": {
                     number: 0,
@@ -58,7 +83,7 @@ function gameObject(){
         },
         away: {
             teamName: "Charlotte Hornets",
-            colors: ["Turquoise" , "Purple"],
+            colors: ["turquoise" , "purple"],
             players: {
                 "Jeff Adrien": {
                     number: 4,
@@ -117,125 +142,102 @@ function gameObject(){
 }
 
 function numPointsScored(name){
-    const obj = gameObject()
-    for (let gameKey in obj){
-        const playersObj = obj[gameKey]["players"]
-        if (playersObj[name]) {
-            let player = playersObj[name]
-            return player["points"]
-        }
-    }
+    console.log(`${name} scored ${players[name].points} points.`)
 }
 
 function shoeSize(name){
-    const obj = gameObject()
-    for (let gameKey in obj){
-        let teamObj = obj[gameKey]
-        let playersObj = teamObj["players"]
-        if (playersObj[name]) {
-            let player = playersObj[name]
-            return player["shoe"]
-        }
-    }
+    console.log(`${name} wears size ${players[name].shoe} shoes.`)
 }
 
 function teamColors(team) {
-    const obj = gameObject()
-    for (let gameKey in obj){
-        let teamObj = obj[gameKey]
-        if (teamObj["teamName"] === team) {
-            return teamObj["colors"]
-        }
-    }
+    const [homeColor1,homeColor2] = home.colors
+    const [awayColor1,awayColor2] = away.colors
+    if (home.teamName === team)
+        console.log(`The ${home.teamName} have ${homeColor1} and ${homeColor2} as their team colors.`)
+    else
+        console.log(`The ${away.teamName} have ${awayColor1} and ${awayColor2} as their team colors.`)
 }
 
 function teamNames(){
-    const obj = gameObject()
-    const teamNames = []
-    for (let gameKey in obj){
-        let teamObj = obj[gameKey]
-        teamNames.push(teamObj["teamName"])
-    }
-    return teamNames
+    console.log(`The ${home.teamName} are playing the ${away.teamName}.`)
 }
 
 function playerNumbers(team){
-    const obj = gameObject()
-    const jerseyNumbers = []
-    for (let gameKey in obj){
-        const teamObj = obj[gameKey]
-        if (teamObj["teamName"] === team) {
-            const playersObj = teamObj["players"]
-            for (let playerKey in playersObj) {
-                const player = playersObj[playerKey]
-                jerseyNumbers.push(player["number"])
-            }
-        }
-    }
-    return jerseyNumbers
+    const teamNums = []
+    if (home.teamName === team)
+        for (const player in home.players)
+            teamNums.push(home.players[player].number)
+    else
+        for (const player in away.players)
+            teamNums.push(away.players[player].number)
+    console.log(`The jersey numbers for the ${team} are ${teamNums.splice(0 , teamNums.length - 1)}, and ${teamNums.slice(-1)}`)
 }
 
 function playerStats(name){
-    const obj = gameObject()
-    for (let gameKey in obj){
-        const playersObj = obj[gameKey]["players"]
-        if (playersObj[name]) {
-            const stats = playersObj[name]
-            return stats
-        }
-    }
+    console.log(`${name}'s stats for this game:`)
+    console.log(players[name])
 }
 
-
-console.log(`Brendan Haywood scored ${numPointsScored("Brendan Haywood")} points`)
-console.log(`Reggie Evans wears size ${shoeSize("Reggie Evans")} shoes`)
-console.log(`Charlotte Hornets' team colors are ${teamColors("Charlotte Hornets")}.`)
-console.log(`The teams playing in this game: ${teamNames()}`)
-console.log(`The numbers of the players on Charlotte Hornets are: ${playerNumbers("Charlotte Hornets")}.`)
-console.log("DeSagna Diop's stats are: " + playerStats("DeSagna Diop"))
-/* JUNK CODE
-
-function numPointsScored(name){
-    let gameObj = gameObject()
-    for (let gameKey in gameObj){
-        let teamObj = gameObj[gameKey]
-        for (let teamKey in teamObj){
-            if (teamKey === "players"){
-                let playerObj = teamObj[teamKey]
-                for (let playerKey in playerObj){
-                    if (playerKey === name){
-                        let statObj = playerObj[playerKey]
-                        for (let statKey in statObj){
-                            if (statKey === "points") {
-                                return statObj[statKey]
-                            }
-                        }
-                    }
-                }
-            }
+function bigShoeRebounds(){
+    let biggestShoe = players["Alan Anderson"]
+    let playerName = "Alan Anderson"
+    for (const player in players)
+        if (players[player].shoe > biggestShoe.shoe) {
+            biggestShoe = players[player]
+            playerName = player
         }
-    }
+    console.log(`${playerName} has big ole feet and had ${biggestShoe.rebounds} rebounds this game.`)
 }
 
-function shoeSize(name){
-    let gameObj = gameObject()
-    for (let gameKey in gameObj){
-        let teamObj = gameObj[gameKey]
-        for (let teamKey in teamObj){
-            if (teamKey === "players"){
-                let playerObj = teamObj[teamKey]
-                for (let playerKey in playerObj){
-                    if (playerKey === name){
-                        let statObj = playerObj[playerKey]
-                        for (let statKey in statObj){
-                            if (statKey === "shoe") {
-                                return statObj[statKey]
-                            }
-                        }
-                    }
-                }
-            }
+function mostPointsScored(){
+    let mostPoints = players["Alan Anderson"]
+    let playerName = "Alan Anderson"
+    for (const player in players)
+        if (players[player].points > mostPoints.points) {
+            mostPoints = players[player]
+            playerName = player
         }
+    console.log(`${playerName} was the highest scoring player, with ${mostPoints.points} points this game.`)
+}
+
+function winningTeam(){
+    let homePoints = 0
+    let awayPoints = 0
+    for (const player in home.players)
+        homePoints += home.players[player].points
+    for (const player in away.players)
+        awayPoints += away.players[player].points
+    if (homePoints > awayPoints)
+        console.log(`${home.teamName} win by ${homePoints-awayPoints} points!`)
+    else if (awayPoints > homePoints)
+        console.log(`${away.teamName} win by ${awayPoints-homePoints} points!`)
+    else console.log("We have a tie!")
+}
+
+function playerWithLongestName(){
+    let longestName = "Alan Anderson"
+    for (const player in players)
+        if (player.length > longestName.length)
+            longestName = player
+    console.log(`${longestName} has the longest name.`)
+    return longestName
+}
+
+function doesLongNameStealATon(){
+    let longestName = playerWithLongestName()
+    console.log("")
+    let mostSteals = players["Alan Anderson"].steals
+    for (const player in players)
+        if (players[player].steals > mostSteals)
+            mostSteals = players[player].steals
+    if (players[longestName].steals === mostSteals){
+        console.log(`${longestName} has the longest name and the most steals, with ${mostSteals} steals.`)
+        console.log("")
+        return true
     }
-} 
-*/
+    else {
+        console.log(`${longestName} has the longest name, but not the most steals.`)
+        console.log("")
+        return false
+    }
+}
